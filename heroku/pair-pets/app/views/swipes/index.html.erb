@@ -1,0 +1,61 @@
+<% if flash[:message] %>
+	<script>
+		Materialize.toast("<%= flash[:message] %>", 4000)
+	</script>
+<% end %>
+
+
+
+
+<center> 
+<div class="row container">
+	<h4> Start swiping for your canine crush 🐶❤️</h4>
+	 <div class="col s6 offset-s3 valign">
+	    <div class="card">
+	        <div class="card-image">
+	           <% if @random_possible_match != 0 %>
+	           <% pet = Pet.find_by(id: @random_possible_match) %>
+	           <%= image_tag pet.image.swipe.url unless pet.image.blank?%>
+	      
+	               
+				
+			
+	              <span class="card-title">	<%= pet.name%></span>
+	        </div>
+
+	        <div class="card-content">
+	            <p>" <%= pet.description %> "</p>
+	        </div>
+
+
+
+	        <div class="card-action">
+	            <p>
+	            	<%= form_for :swipe do |f| %>
+						<%=f.hidden_field :swiper_id, value: session[:current_pet_id] %>
+						<%=f.hidden_field :swipee_id, value: @random_possible_match %>
+						<% flash.clear %>
+				</p>
+						<% flash.clear %>
+						<a class="waves-effect waves-light btn" href="/swipes" method="get">Skip</a>
+			            <a class="waves-effect waves-light btn"><%= f.submit "Swipe" %></a>
+	                <% end %>
+	        </div>
+
+	    </div>
+
+	</div>
+</div>
+
+				<% else %>
+					<p>WE HAVE NO PETS MATCHING YOUR CRITERIA</p>
+				<%end %>
+
+
+
+
+<p>
+<%= link_to "See your matches", matches_path %> ||
+<%= link_to "Back to pets", pets_path %>
+</p>
+</center>

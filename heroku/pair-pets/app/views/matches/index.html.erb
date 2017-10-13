@@ -1,0 +1,55 @@
+<div class="row container">
+  <% if @matches.present? %>
+  <center><h4 class="red-text text-darken-4" style="font-weight:bold">You have been matched with:</h4></center>
+    <% @matches.each do |match| %>
+    	
+          <div class="col s4">
+          <% if match.pet1_id == session[:current_pet_id] %>
+          <% @matched_2 = Pet.find_by(id: match.pet2_id) %>
+          	<div class="card">
+                <div class="card-image">
+                  <%= image_tag @matched_2.image.show.url unless @matched_2.image.blank? %>
+                  <span class="card-title"></span>
+                </div>
+                <div class="card-content">
+                  <p><span class="red-text text-darken-4" style="font-weight:bold"> Name:</span> <%= @matched_2.name %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Breed:</span> <%= @matched_2.breed.name %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Age:</span> <%= @matched_2.age %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Description:</span> <%= @matched_2.description %></p>
+                </div>
+           <%else %>
+           <% @matched_1 = Pet.find_by(id: match.pet1_id) %>
+           <div class="card">
+                <div class="card-image">
+                  <%= image_tag @matched_1.image.show.url unless @matched_1.image.blank? %>
+                  <span class="card-title"></span>
+                </div>
+                <div class="card-content">
+                  <p><span class="red-text text-darken-4" style="font-weight:bold"> Name:</span> <%= @matched_1.name %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Breed:</span> <%= @matched_1.breed.name %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Age:</span> <%= @matched_1.age %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Description:</span> <%= @matched_1.description %></p>
+                </div>
+
+           <%end%>
+                <div class="card-action">
+                  <%= form_for :message, url: new_message_path, method: :get do |f| %>
+					<%= f.hidden_field :match_id, value: match.id %>
+					<a class="waves-effect waves-light btn"><%= f.submit "Send Message" %></a>
+					<% end %>
+                </div>
+
+            </div>
+          </div>
+    <%end%>
+  <%else %>
+  <center> 
+  <p> You have no match :'( </p>
+  <%= link_to "Back to pets", pets_path %>
+  </center>
+  <% end %>
+</div>
+
+
+
+

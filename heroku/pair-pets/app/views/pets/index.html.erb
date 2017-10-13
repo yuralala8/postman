@@ -1,0 +1,33 @@
+<div class="pets">
+<div class="row container">
+  <% if @pets.present? %>
+    <% @pets.each do |pet| %>
+          <div class="col s4">
+          	<div class="card">
+                <div class="card-image">
+                  <%= image_tag pet.image.show.url unless pet.image.blank? %>
+                  <span class="card-title"><%= pet.name %></span>
+                </div>
+                <div class="card-content">
+                	<form action="/swipes" method="get">
+    					       <input type="hidden" name="id" value="<%=pet.id%>">
+    					       <input type="submit" value= "Start Swiping">
+    					    </form>
+                  <p><span class="red-text text-darken-4" style="font-weight:bold"> Gender:</span> <%= pet.gender %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Breed:</span> <%= pet.breed.name %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Age:</span> <%= pet.age %></p>
+     				      <p><span class="red-text text-darken-4" style="font-weight:bold"> Description:</span> <%= pet.description %></p>
+                </div>
+                <div class="card-action">
+                  <a  href="<%=edit_pet_path(pet) %>">Edit</a>
+     		 		      <a  href="<%=delete_path(pet)%>" >Delete</a>
+                </div>
+            </div>
+          </div>
+    <% end %>
+  <%else %>
+  <center> Visit your profile to add your pet! </center>
+  <% end %>
+</div>
+</div>
+          

@@ -1,0 +1,35 @@
+<br>
+<div class="container">
+	<%= form_for :pet do |f| %>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+		<%= f.label :breed %>
+		<%= f.select :breed_id, Breed.all.map {|breed| [breed.name, breed.id]}, include_blank: true%>
+		<%= f.fields_for :breed do |breed_form| %>
+			<%= breed_form.text_field :name, placeholder: "Don't see your breed? Add it here!"%><br>
+		<% end %>
+		<%= f.label :gender %><br>
+		
+		<%= f.radio_button :gender, 'Male' %>
+		<%= f.label :gender_male, 'Male' %>
+		
+		<%= f.radio_button :gender, 'Female' %>
+		<%= f.label :gender_female, 'Female' %> 
+		<br>
+		<%= f.label :age %>
+		<%= f.text_field :age %>
+		<%= f.label :description %>
+		<%= f.text_area :description %>
+		<%= f.label :image %>
+		<%= f.file_field :image %>
+		<%= f.submit "Add Pet" %>
+	<% end %>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+
+    </script>

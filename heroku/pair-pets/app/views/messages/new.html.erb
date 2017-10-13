@@ -1,0 +1,24 @@
+<div class="container">
+	<h5  style="float:left;"><span class="red-text text-darken-4" style="font-weight:bold;"> From</span> <%= @sender.username %></h5>
+
+
+	<h5 style="float:right;;"><span class="red-text text-darken-4" style="font-weight:bold"> To</span> <%= link_to @receiver.username, user_path(@receiver.id) %></h5>
+
+	<br><br><br>
+	<span>
+		<%= image_tag @senders_pet.image.show.url unless @senders_pet.image.blank?%>
+		<span class="red-text text-darken-4" style="font-weight:bold"> Your pet: </span><%= @senders_pet.name %>
+	</span>
+	<span style="float:right;">
+		<%= image_tag @receivers_pet.image.show.url unless @receivers_pet.image.blank?%>
+		<span class="red-text text-darken-4" style="font-weight:bold"> Matched pet: </span><%= @receivers_pet.name %> 
+	</span>
+	<%= form_for :message do |f| %>
+		<%= f.hidden_field :sender_id, value: @sender.id %>
+		<%= f.hidden_field :receiver_id, value: @receiver.id %>
+		<%= f.hidden_field :match_id, value: @match.id %>
+		<%= f.label 'Write your message here...' %>
+		<%= f.text_area :content %>
+		<%= f.submit "Send" %>
+	<% end %>
+</div>

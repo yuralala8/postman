@@ -1,0 +1,55 @@
+<div class="profile">
+<div class="row container">
+	<h3> <%= @user.username %>'s profile </h3>
+
+    <div class="col s6">
+      <div class="card ">
+        <div class="card-image">
+
+        	<%= image_tag @user.image.swipe.url unless @user.image.blank?%>
+        	<span class="card-title"><%=@user.username %></span>
+        	<% if @user.id == session[:user_id] %>
+	        	<a class="btn-floating halfway-fab waves-effect waves-light red" href="<%=edit_user_path%>">
+	        		<i class="material-icons">edit</i>
+	        	</a>
+         	<% end %>
+
+        </div>
+        <div class="card-content">
+			<p>Hi, I'm from <%= @user.city%>. </p>
+			<p><%= @user.description%></p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col s6 center">
+   	  <% @pets.each do |pet| %>
+    	  <div class="row">
+			<div class="col s12">
+		      <div class="card horizontal">
+		      	<div class="card-image">
+		          <%= image_tag pet.image.show.url, :class => 'img' unless pet.image.blank? %>
+		        </div>  
+			      <div class="card-stacked">
+			        <div class="card-content">
+			          <p><%= pet.name %></p>
+			          <p><%=pet.description%></p>
+			        </div>
+			        <% if @user.id == session[:user_id] %>
+			          <div class="card-action">
+			          	<%= link_to "Edit", edit_pet_path(pet) %>
+			          </div>
+			        <% end %>
+			      </div>
+			  </div>
+			</div>	
+		  </div>
+	  <% end %>
+
+	  <% if @user.id == session[:user_id] %>
+		<a class="waves-effect waves-light btn" href="<%=new_pet_path%>" >Add Pet</a>
+		<a class="waves-effect waves-light btn" href="<%=delete_user_path(session[:user_id])%>" method="delete"> Delete Account</a>
+	  <% end %>
+    </div>
+</div>
+</div>
